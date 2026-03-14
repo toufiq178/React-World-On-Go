@@ -1,8 +1,20 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import Country from './Country/Country';
 import './Countries.css';
 
 const Countries = ({ countriesPromise }) => {
+
+
+    const [visitedCountries ,setVisitedCountries] = useState([])
+
+    const handlerVisitedCountries = (country) => {
+
+        console.log('im click from countries =' ,country.name.common);
+
+        const newVisitedCountries = [...visitedCountries , country]
+        setVisitedCountries(newVisitedCountries)
+        
+    }
 
     const countriesData = use(countriesPromise);
     const countries = countriesData.countries
@@ -13,9 +25,20 @@ const Countries = ({ countriesPromise }) => {
         <div >
             <h1>Total Countries :  {countries.length}</h1>
 
+            <h3>Visited Count : {visitedCountries.length}</h3>
+            <ol>
+
+                {
+                    visitedCountries.map(country => <li  key={country.ccn3.ccn3} >{country.name.common}</li>)
+                }
+            </ol>
             <div className='card-container'>
                 {
-                    countries.map(country => <Country key={country.ccn3.ccn3} country={country}></Country>)
+                    countries.map(country => <Country 
+                        key={country.ccn3.ccn3} 
+                        country={country}
+                        handlerVisitedCountries = {handlerVisitedCountries}
+                        ></Country>)
                 }
             </div>
         </div>
